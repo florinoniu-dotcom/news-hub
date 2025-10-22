@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>News Hub</title>
+  <style>
+    body { font-family:sans-serif; background:#0f1420; color:#e8eef8; margin:0; padding:20px; }
+    h1{margin-top:0;} a{color:#7aa2ff;} .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px;}
+    .card{background:#1a2130;padding:12px;border-radius:10px;border:1px solid #333;}
+    .meta{font-size:12px;color:#9fb3c8;margin-bottom:4px;}
+  </style>
+</head>
+<body>
+  <h1>My News Hub</h1>
+  <div id="grid" class="grid"></div>
+  <script>
+    fetch("feed.json").then(r=>r.json()).then(data=>{
+      const g=document.getElementById("grid");
+      data.items.forEach(it=>{
+        g.innerHTML += `<div class='card'>
+          <div class='meta'>${it.source} • ${new Date(it.ts*1000).toLocaleString()}</div>
+          <a href='${it.link}' target='_blank'>${it.title}</a>
+        </div>`;
+      });
+    });
+  </script>
+</body>
+</html>
